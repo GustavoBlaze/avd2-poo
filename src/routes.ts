@@ -10,5 +10,6 @@ routes.post('/funcionarios', FuncionarioController.store);
 routes.get('/entregaepi', EntregaController.index);
 routes.post('/entregaepi', EntregaController.store);
 routes.get('/entregaepi/:id', EntregaController.show);
+routes.delete('/entregaepi/:id', EntregaController.destroy);
 
 export { routes };

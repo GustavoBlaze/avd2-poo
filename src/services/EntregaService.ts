@@ -8,9 +8,10 @@ interface IEntregaCreate {
   quantidade_entregue: number;
 }
 
-interface IGetById {
+interface IObjectId {
   id: string;
 }
+
 export class EntregaService {
   async create({
     funcionario_id,
@@ -39,7 +40,7 @@ export class EntregaService {
     return entregas;
   }
 
-  async getById({ id }: IGetById) {
+  async getById({ id }: IObjectId) {
     const repository = getCustomRepository(EntregaRepository);
     const entrega = await repository.findOne(
       { id },
@@ -51,5 +52,16 @@ export class EntregaService {
     }
 
     return entrega;
+  }
+
+  async destroyById({ id }: IObjectId) {
+    const repository = getCustomRepository(EntregaRepository);
+    const entrega = await repository.findOne({ id });
+
+    if (!entrega) {
+      throw new Error('Entrega não existe');
+    }
+
+    return await repository.delete({ id });
   }
 }

@@ -41,4 +41,17 @@ export class EntregaController {
       res.status(400).json({ message: error.message });
     }
   }
+
+  static async destroy(req: Request, res: Response) {
+    const { id } = req.params;
+    const service = new EntregaService();
+
+    try {
+      await service.destroyById({ id });
+      return res.json({ message: 'Entrega deletada!' });
+    } catch (error) {
+      console.log({ error });
+      res.status(400).json({ message: error.message });
+    }
+  }
 }
