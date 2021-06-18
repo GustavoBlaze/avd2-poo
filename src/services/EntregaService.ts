@@ -46,6 +46,10 @@ export class EntregaService {
       { relations: ['funcionario'] },
     );
 
+    if (!entrega) {
+      throw new Error('Entrega não existe');
+    }
+
     return entrega;
   }
 }
