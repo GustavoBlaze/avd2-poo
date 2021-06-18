@@ -8,6 +8,9 @@ interface IEntregaCreate {
   quantidade_entregue: number;
 }
 
+interface IGetById {
+  id: string;
+}
 export class EntregaService {
   async create({
     funcionario_id,
@@ -34,5 +37,15 @@ export class EntregaService {
     const entregas = await repository.find({ relations: ['funcionario'] });
 
     return entregas;
+  }
+
+  async getById({ id }: IGetById) {
+    const repository = getCustomRepository(EntregaRepository);
+    const entrega = await repository.findOne(
+      { id },
+      { relations: ['funcionario'] },
+    );
+
+    return entrega;
   }
 }

@@ -28,4 +28,17 @@ export class EntregaController {
       res.status(400).json({ message: error.message });
     }
   }
+
+  static async show(req: Request, res: Response) {
+    const { id } = req.params;
+    const service = new EntregaService();
+
+    try {
+      const entrega = await service.getById({ id });
+      return res.json(entrega);
+    } catch (error) {
+      console.log({ error });
+      res.status(400).json({ message: error.message });
+    }
+  }
 }
