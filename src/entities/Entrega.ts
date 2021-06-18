@@ -4,30 +4,32 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
+import { Funcionario } from './Funcionario';
 import { v4 as uuid } from 'uuid';
-import { Entrega } from './Entrega';
 
-@Entity('funcionarios')
-export class Funcionario {
+@Entity('entregaEPI')
+export class Entrega {
   @PrimaryColumn()
   id: string;
 
   @Column()
-  nome: string;
+  funcionario_id: string;
 
   @Column()
-  cpf: string;
+  nome_epi: string;
 
   @Column()
-  funcao: string;
+  data_entrega: Date;
 
-  @OneToMany(() => Entrega, entrega => entrega.funcionario)
-  entregas: Entrega[];
+  @Column()
+  quantidade_entregue: number;
+
+  @ManyToOne(() => Funcionario, funcionario => funcionario.entregas)
+  @JoinColumn({ name: 'funcionario_id', referencedColumnName: 'id' })
+  funcionario: Funcionario;
 
   @CreateDateColumn()
   created_at: Date;
