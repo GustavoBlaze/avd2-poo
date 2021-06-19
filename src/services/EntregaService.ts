@@ -11,7 +11,13 @@ interface IEntregaCreate {
 interface IObjectId {
   id: string;
 }
-
+interface IEntregaUpdate {
+  id: string;
+  funcionario_id?: string;
+  nome_epi?: string;
+  data_entrega?: Date;
+  quantidade_entregue?: number;
+}
 export class EntregaService {
   async create({
     funcionario_id,
@@ -63,5 +69,18 @@ export class EntregaService {
     }
 
     return await repository.delete({ id });
+  }
+
+  async update({ id, ...data }: IEntregaUpdate) {
+    const repository = getCustomRepository(EntregaRepository);
+    const entrega = await repository.findOne({ id });
+
+    if (!entrega) {
+      throw new Error('Entrega not found!');
+    }
+
+    await repository.update({ id }, { ...data });
+
+    return await repository.findOne({ id });
   }
 }

@@ -54,4 +54,21 @@ export class EntregaController {
       res.status(400).json({ message: error.message });
     }
   }
+
+  static async update(req: Request, res: Response) {
+    const { id } = req.params;
+
+    const service = new EntregaService();
+
+    try {
+      const entrega = await service.update({
+        id,
+        ...req.body,
+      });
+      return res.json(entrega);
+    } catch (error) {
+      console.log({ error });
+      res.status(400).json({ message: error.message });
+    }
+  }
 }
